@@ -1,0 +1,24 @@
+## Build Project
+	
+To build kmeans project, run:
+	
+	mvn -DskipTests clean package
+
+If this cmd returns success, you will see SparkGpuKMeans-1.0-SNAPSHOT.jar 
+in the folder 'target'.
+
+## Run Project
+
+Before run kmeans, you should submit the folder 'data' to hdfs, 
+and then run as follows:
+
+	$SPARK_HOME/bin/spark-submit \                 # $SPARK_HOME is the location of your spark home
+	--class org.apache.spark.gpu.SparkGpuKMeans \
+	--master local[8] \                            # cpu cores and you can change it as needed
+	--executor-memory 5G \						　 # executor's mem and can be changed 		
+	--driver-memory 5G \						   # driver's mem and can be changed	
+	--jars lib/JOCL-0.1.9.jar \　　　			   # externl jar package		
+	target/SparkGpuKMeans-1.0-SNAPSHOT.jar \				  	
+	data/1000 \                                    # test set and can be replaced by your own's
+	50 \										   # center pointer of the cluster and be changed 
+
